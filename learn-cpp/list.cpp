@@ -62,10 +62,75 @@ public:
     this->tail = new_node;
   }
 
+  void push_back_without_tail(int val)
+  {
+    Node *new_node = new Node(val);
+
+    if (head == NULL)
+    {
+      this->head = new_node;
+      return;
+    }
+
+    Node *last = head;
+
+    while (last->next != NULL)
+    {
+      last = last->next;
+    }
+
+    last->next = new_node;
+  }
+
+  void delete_front()
+  {
+    if (head == NULL)
+    {
+      cout << "List is empty!" << endl;
+      return;
+    }
+
+    Node *temp = head;
+    this->head = this->head->next;
+
+    if (head == NULL)
+    {
+      this->tail = NULL;
+    }
+
+    delete temp; // to clear the deleted node from memory
+  }
+
+  void delete_back()
+  {
+    if (head == NULL)
+    {
+      cout << "List is empty!" << endl;
+      return;
+    }
+
+    if (head == tail)
+    {
+      delete head;
+      head = tail = NULL;
+      return;
+    }
+
+    Node *temp = head;
+
+    while (temp->next != tail)
+    {
+      tail = tail->next;
+    }
+
+    delete tail;
+    tail = temp;
+    temp->next = NULL;
+  }
+
   void print_list()
   {
     Node *temp = head;
-    cout << temp << endl;
 
     if (head == NULL)
     {
@@ -86,7 +151,9 @@ int main()
 {
   List l;
   l.push_front(10);
-  l.push_back(20);
+  l.push_front(5);
+  l.push_back_without_tail(20);
+  l.delete_front();
   l.print_list();
 
   return 0;
